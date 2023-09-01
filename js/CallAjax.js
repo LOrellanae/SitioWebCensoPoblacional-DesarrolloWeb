@@ -1,124 +1,357 @@
-GetDatos();
+//GetDatos();
+DataIni();
+
+function DataIni() {
+  const comboBoxUbi = document.getElementById("cmbUbicacion");
+
+  var DepOpciones = [
+    { value: "98", text: "Republica de Guatemala" },
+    { value: "1", text: "Guatemala" },
+    { value: "2", text: "El Progreso" },
+    { value: "3", text: "Sacatepequez" },
+    { value: "4", text: "Chimaltenango" },
+    { value: "5", text: "Escuintla" },
+    { value: "6", text: "Santa Rosa" },
+    { value: "7", text: "Solola" },
+    { value: "8", text: "Totonicapan" },
+    { value: "9", text: "Quetzaltenango" },
+    { value: "10", text: "Suchitepequez" },
+    { value: "11", text: "Retalhuleu" },
+    { value: "12", text: "San Marcos" },
+    { value: "13", text: "Huehuetenango" },
+    { value: "14", text: "Quiche" },
+    { value: "15", text: "Baja Verapaz" },
+    { value: "16", text: "Alta Verapaz" },
+    { value: "17", text: "Peten" },
+    { value: "18", text: "Izabal" },
+    { value: "19", text: "Zacapa" },
+    { value: "20", text: "Chiquimula" },
+    { value: "21", text: "Jalapa" },
+    { value: "22", text: "Jutiapa" }
+  ]
+
+  comboBoxUbi.innerHTML = "";
+
+  DepOpciones.forEach(function (OpcionesDep) {
+    var option = document.createElement("option");
+    option.value = OpcionesDep.value;
+    option.text = OpcionesDep.text;
+    comboBoxUbi.appendChild(option);
+  })
+
+  var btnSr = document.getElementById("btnSearch");
+  btnSr.addEventListener('click', function(){
+    if (comboBoxUbi != null || comboBoxUbi.value != 98) {
+      url = "https://censopoblacion.gt/indicadores/" + comboBoxUbi.value + "/999";
+    } else {
+      url = "https://censopoblacion.gt/indicadores/98/999";
+    }
+    GetCenso(url);
+  }, false);
+  if (comboBoxUbi != null || comboBoxUbi.value != 98) {
+    url = "https://censopoblacion.gt/indicadores/" + comboBoxUbi.value + "/999";
+  } else {
+    url = "https://censopoblacion.gt/indicadores/98/999";
+  }
+  GetCenso(url);
+
+
+  if (comboBoxUbi.value <= 22 && comboBoxUbi.value >= 1) {
+    BusquedaDept(comboBoxUbi.value)
+  }
+
+}
+
+function BusquedaDept(IDdept){
+  
+}
+
+function GetCenso(url) {
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      var divCenso = document.getElementById('divCenso');
+      divCenso.innerHTML = '';
+
+
+      if (data.length > 0) {
+
+        const div = document.createElement("div");
+        div.className = "col-md-12";
+
+        const div2 = document.createElement("div");
+        div2.className = "row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-400";
+
+        const table = document.createElement("table");
+        table.className = "table table-bordered table-white table-hover";
+
+        const name = document.createElement("h3");
+        name.className = "mt-1 mb-1 text-center ";
+        name.innerText = data[0].nombre;
+
+        const capital = document.createElement("h5");
+        capital.className = "mb-1 text-center";
+        capital.innerText = data[0].capital;
+
+        const tbody = document.createElement("tbody");
+        const tr = document.createElement("tr");
+        const tr1 = document.createElement("tr");
+        const tr2 = document.createElement("tr");
+        const tr3 = document.createElement("tr");
+        const tr4 = document.createElement("tr");
+        const tr5 = document.createElement("tr");
+
+        const td = document.createElement("td");
+        td.innerText = data[0].total_sexo_hombre;
+
+        const td1 = document.createElement("td");
+        td1.innerText = data[0].total_sexo_mujeres;
+
+        const td2 = document.createElement("td");
+        td2.innerText = data[0].pob_total;
+
+        const td3 = document.createElement("td");
+        td3.innerText = data[0].total_hogares;
+
+        const td4 = document.createElement("td");
+        td4.innerText = data[0].porc_sector_rural + " %";
+
+        const td5 = document.createElement("td");
+        td5.innerText = data[0].porc_sector_urbano + " %";
+
+        const thH = document.createElement("th");
+        thH.scope = "row";
+        thH.innerText = "Total Hombres";
+
+        const thM = document.createElement("th");
+        thM.scope = "row";
+        thM.innerText = "Total Mujeres";
+
+        const thT = document.createElement('th');
+        thT.scope = "row";
+        thT.innerText = "Poblacion Total";
+
+        const thHogar = document.createElement('th');
+        thHogar.scope = "row";
+        thHogar.innerText = "Total Hogares";
+
+        const thRu = document.createElement('th');
+        thRu.scope = "row";
+        thRu.innerText = "Poblacion area Rural";
+
+        const thUrb = document.createElement('th');
+        thUrb.scope = "row";
+        thUrb.innerText = "Poblacion area Urbana";
+
+
+        div2.appendChild(name);
+        div2.appendChild(capital);
+        div2.appendChild(table);
+        table.appendChild(tbody);
+
+        tbody.appendChild(tr);
+        tr.appendChild(thH);
+        tr.appendChild(td);
+
+        tbody.appendChild(tr1);
+        tr1.appendChild(thM);
+        tr1.appendChild(td1);
+
+        tbody.appendChild(tr2);
+        tr2.appendChild(thT);
+        tr2.appendChild(td2);
+
+        tbody.appendChild(tr3);
+        tr3.appendChild(thHogar);
+        tr3.appendChild(td3);
+
+        tbody.appendChild(tr4);
+        tr4.appendChild(thRu);
+        tr4.appendChild(td4);
+
+        tbody.appendChild(tr5);
+        tr5.appendChild(thUrb);
+        tr5.appendChild(td5);
+
+        div.appendChild(div2);
+        divCenso.appendChild(div);
+
+
+      }
+    });
+}
 
 function GetDatos() {
-    const ubicacion = document.getElementById('cmbUbicacion');
-    if (ubicacion != null) {
-        url = "https://censopoblacion.gt/indicadores/2/" + ubicacion.value + "";
-    } else {
-        url = "https://censopoblacion.gt/indicadores/2/999";
-    }
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            var divCenso = document.getElementById('divCenso');
-            divCenso.innerHTML = '';
+  const ubicacion = document.getElementById('cmbUbicacion');
+  if (ubicacion != null) {
+    url = "https://censopoblacion.gt/indicadores/2/" + ubicacion.value + "";
+  } else {
+    url = "https://censopoblacion.gt/indicadores/2/999";
+  }
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      var divCenso = document.getElementById('divCenso');
+      divCenso.innerHTML = '';
 
 
-            if (data.length > 0) {
+      if (data.length > 0) {
 
-                const div = document.createElement("div");
-                div.className = "col-md-12";
+        const div = document.createElement("div");
+        div.className = "col-md-12";
 
-                const div2 = document.createElement("div");
-                div2.className = "row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-400";
+        const div2 = document.createElement("div");
+        div2.className = "row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-400";
 
-                const table = document.createElement("table");
-                table.className = "table table-bordered table-white table-hover";
+        const table = document.createElement("table");
+        table.className = "table table-bordered table-white table-hover";
 
-                const name = document.createElement("h3");
-                name.className = "mt-1 mb-1 text-center ";
-                name.innerText = data[0].nombre;
+        const name = document.createElement("h3");
+        name.className = "mt-1 mb-1 text-center ";
+        name.innerText = data[0].nombre;
 
-                const capital = document.createElement("h5");
-                capital.className = "mb-1 text-center";
-                capital.innerText = data[0].capital;
+        const capital = document.createElement("h5");
+        capital.className = "mb-1 text-center";
+        capital.innerText = data[0].capital;
 
-                const tbody = document.createElement("tbody");
-                const tr = document.createElement("tr");
-                const tr1 = document.createElement("tr");
-                const tr2 = document.createElement("tr");
-                const tr3 = document.createElement("tr");
-                const tr4 = document.createElement("tr");
-                const tr5 = document.createElement("tr");
-                
-                const td = document.createElement("td");
-                td.innerText = data[0].total_sexo_hombre;
+        const tbody = document.createElement("tbody");
+        const tr = document.createElement("tr");
+        const tr1 = document.createElement("tr");
+        const tr2 = document.createElement("tr");
+        const tr3 = document.createElement("tr");
+        const tr4 = document.createElement("tr");
+        const tr5 = document.createElement("tr");
 
-                const td1 = document.createElement("td");
-                td1.innerText = data[0].total_sexo_mujeres;
+        const td = document.createElement("td");
+        td.innerText = data[0].total_sexo_hombre;
 
-                const td2 = document.createElement("td");
-                td2.innerText = data[0].pob_total;
+        const td1 = document.createElement("td");
+        td1.innerText = data[0].total_sexo_mujeres;
 
-                const td3 = document.createElement("td");
-                td3.innerText = data[0].total_hogares;
+        const td2 = document.createElement("td");
+        td2.innerText = data[0].pob_total;
 
-                const td4 = document.createElement("td");
-                td4.innerText = data[0].porc_sector_rural+" %";
+        const td3 = document.createElement("td");
+        td3.innerText = data[0].total_hogares;
 
-                const td5 = document.createElement("td");
-                td5.innerText = data[0].porc_sector_urbano+" %";
+        const td4 = document.createElement("td");
+        td4.innerText = data[0].porc_sector_rural + " %";
 
-                const thH = document.createElement("th");
-                thH.scope = "row";
-                thH.innerText = "Total Hombres";
-                
-                const thM = document.createElement("th");
-                thM.scope = "row";
-                thM.innerText = "Total Mujeres";
+        const td5 = document.createElement("td");
+        td5.innerText = data[0].porc_sector_urbano + " %";
 
-                const thT = document.createElement('th');
-                thT.scope = "row";
-                thT.innerText = "Poblacion Total";
-                
-                const thHogar = document.createElement('th');
-                thHogar.scope = "row";
-                thHogar.innerText = "Total Hogares";
+        const thH = document.createElement("th");
+        thH.scope = "row";
+        thH.innerText = "Total Hombres";
 
-                const thRu = document.createElement('th');
-                thRu.scope = "row";
-                thRu.innerText = "Poblacion area Rural";
+        const thM = document.createElement("th");
+        thM.scope = "row";
+        thM.innerText = "Total Mujeres";
 
-                const thUrb = document.createElement('th');
-                thUrb.scope = "row";
-                thUrb.innerText = "Poblacion area Urbana";
+        const thT = document.createElement('th');
+        thT.scope = "row";
+        thT.innerText = "Poblacion Total";
 
-                
-                div2.appendChild(name);
-                div2.appendChild(capital);
-                div2.appendChild(table);
-                table.appendChild(tbody);
+        const thHogar = document.createElement('th');
+        thHogar.scope = "row";
+        thHogar.innerText = "Total Hogares";
 
-                tbody.appendChild(tr);
-                tr.appendChild(thH);
-                tr.appendChild(td);
+        const thRu = document.createElement('th');
+        thRu.scope = "row";
+        thRu.innerText = "Poblacion area Rural";
 
-                tbody.appendChild(tr1);
-                tr1.appendChild(thM);
-                tr1.appendChild(td1);
+        const thUrb = document.createElement('th');
+        thUrb.scope = "row";
+        thUrb.innerText = "Poblacion area Urbana";
 
-                tbody.appendChild(tr2);
-                tr2.appendChild(thT);
-                tr2.appendChild(td2);
 
-                tbody.appendChild(tr3);
-                tr3.appendChild(thHogar);
-                tr3.appendChild(td3);
+        div2.appendChild(name);
+        div2.appendChild(capital);
+        div2.appendChild(table);
+        table.appendChild(tbody);
 
-                tbody.appendChild(tr4);
-                tr4.appendChild(thRu);
-                tr4.appendChild(td4);
+        tbody.appendChild(tr);
+        tr.appendChild(thH);
+        tr.appendChild(td);
 
-                tbody.appendChild(tr5);
-                tr5.appendChild(thUrb);
-                tr5.appendChild(td5);
+        tbody.appendChild(tr1);
+        tr1.appendChild(thM);
+        tr1.appendChild(td1);
 
-                div.appendChild(div2);
-                divCenso.appendChild(div);
-            }
-        });
+        tbody.appendChild(tr2);
+        tr2.appendChild(thT);
+        tr2.appendChild(td2);
+
+        tbody.appendChild(tr3);
+        tr3.appendChild(thHogar);
+        tr3.appendChild(td3);
+
+        tbody.appendChild(tr4);
+        tr4.appendChild(thRu);
+        tr4.appendChild(td4);
+
+        tbody.appendChild(tr5);
+        tr5.appendChild(thUrb);
+        tr5.appendChild(td5);
+
+        div.appendChild(div2);
+        divCenso.appendChild(div);
+
+
+      }
+    });
 }
+
+
+// function Charts(){
+//   const sectores = document.getElementById('pobsectores');
+//         const edad = document.getElementById('pobedad');
+//         let SectoresChart = new Chart(sectores, {
+//           type: 'pie',
+//           data: {
+//             labels: ['Rural', 'Urbano'],
+//             datasets: [{
+//               label: 'Porcentaje',
+//               data: [5,6],
+//               borderWidth: 1
+//             }]
+//           },
+//           options: {
+//             scales: {
+//               y: {
+//                 beginAtZero: true
+//               }
+//             }
+//           }
+//         });
+
+//         let EdadChart = new Chart(edad, {
+//           type: 'pie',
+//           data: {
+//             labels: ['Rural', 'Urbano'],
+//             datasets: [{
+//               label: 'Porcentaje',
+//               data: [data[0].porc_edad_014, data[0].porc_edad_1564, data[0].porc_edad_65],
+//               borderWidth: 1
+//             }]
+//           },
+//           options: {
+//             scales: {
+//               y: {
+//                 beginAtZero: true
+//               }
+//             }
+//           }
+//         });
+
+//         SectoresChart.data.datasets[0].data = [data[0].porc_sector_rural,data[0].porc_sector_urbano];
+//         SectoresChart.update();
+//         EdadChart.update();
+// }
+
+
 
 // [
 //     {
