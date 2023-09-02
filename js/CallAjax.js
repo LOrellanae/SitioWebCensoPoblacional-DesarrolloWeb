@@ -374,8 +374,8 @@ function actualizarGraficaHombresMujeres(data) {
                       data[0].total_sexo_mujeres,
                   ],
                   backgroundColor: [
-                      "rgba(163, 221, 203, 1.0)",
-                      "rgba(232, 233, 161, 1.0)",
+                      "rgba(75, 252, 13, 1.0)",
+                      "rgba(252, 35, 13, 1.0)",
                   ],
                   borderColor: [
                       "rgba(163, 221, 203, 1)",
@@ -409,12 +409,12 @@ function actualizarGraficaEdades(data) {
                       data[0].pob_edad_65,
                   ],
                   backgroundColor: [
-                      "rgba(230, 181, 102, 0.2)",
-                      "rgba(229, 112, 126, 0.2)",
-                      "rgba(231, 160, 115, 0.2)",
+                      "rgba(13, 115, 252, 1.0)",
+                      "rgba(251, 255, 1, 1.0)",
+                      "rgba(0, 255, 255, 1.0)",
                   ],
                   borderColor: [
-                      "rgba(230, 181, 102, 1)",
+                      "rgba(13, 115, 252, 1)",
                       "rgba(229, 112, 126, 1)",
                       "rgba(231, 160, 115, 1)",
 ,
