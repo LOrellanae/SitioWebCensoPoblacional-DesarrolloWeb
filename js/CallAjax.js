@@ -157,10 +157,10 @@ function GetCenso(url, ID) {
         td3.innerText = data[0].total_hogares;
 
         const td4 = document.createElement("td");
-        td4.innerText = data[0].porc_sector_rural + " %";
+        td4.innerText = data[0].porc_sector_rural.toFixed(2) + " %";
 
         const td5 = document.createElement("td");
-        td5.innerText = data[0].porc_sector_urbano + " %";
+        td5.innerText = data[0].porc_sector_urbano.toFixed(2) + " %";
 
         const thH = document.createElement("th");
         thH.scope = "row";
@@ -295,10 +295,10 @@ function GetCenso(url, ID) {
           td3.innerText = resultados[0].total_hogares;
 
           const td4 = document.createElement("td");
-          td4.innerText = resultados[0].porc_sector_rural + " %";
+          td4.innerText = resultados[0].porc_sector_rural.toFixed(2) + " %";
 
           const td5 = document.createElement("td");
-          td5.innerText = resultados[0].porc_sector_urbano + " %";
+          td5.innerText = resultados[0].porc_sector_urbano.toFixed(2) + " %";
 
           const thH = document.createElement("th");
           thH.scope = "row";
