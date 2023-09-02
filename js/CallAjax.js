@@ -1,6 +1,7 @@
 DataIni();
 
 function DataIni() {
+  Chart.defaults.global.defaultFontColor = "#fff";
   const comboBoxUbi = document.getElementById("cmbUbicacion");
 
   var DepOpciones = [
@@ -125,14 +126,14 @@ function GetCenso(url, ID) {
         div2.className = "row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-400";
 
         const table = document.createElement("table");
-        table.className = "table table-bordered table-white table-hover";
+        table.className = "table table-bordered table-dark table-hover";
 
         const name = document.createElement("h3");
-        name.className = "mt-1 mb-1 text-center ";
+        name.className = "mt-1 mb-1 text-center text-white ";
         name.innerText = data[0].nombre;
 
         const capital = document.createElement("h5");
-        capital.className = "mb-1 text-center";
+        capital.className = "mb-1 text-center text-white";
         capital.innerText = data[0].capital;
 
         const tbody = document.createElement("tbody");
@@ -219,8 +220,8 @@ function GetCenso(url, ID) {
         divCenso.appendChild(div);
 
         var divMuni = document.getElementById('divMuni');
-      divMuni.innerHTML = '';
-
+        divMuni.innerHTML = '';
+        
         actualizarGraficaHombresMujeres(data);
         actualizarGraficaEdades(data);
 
@@ -257,13 +258,13 @@ function GetCenso(url, ID) {
 
         resultados.forEach(resultados => {
           const div = document.createElement("div");
-          div.className = "col-md-12";
+          div.className = "col-md-6";
 
           const div2 = document.createElement("div");
           div2.className = "row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-400";
 
           const table = document.createElement("table");
-          table.className = "table table-bordered table-white table-hover";
+          table.className = "table table-bordered table-dark table-hover";
 
           const name = document.createElement("h3");
           name.className = "mt-1 mb-1 text-center ";
@@ -364,33 +365,33 @@ function GetCenso(url, ID) {
 
 function actualizarGraficaHombresMujeres(data) {
   const graficaHombresMujeres = new Chart(document.getElementById("graficaHombresMujeres"), {
-      type: "pie",
-     data: {
-          labels: ["Hombres", "Mujeres"],
-          datasets: [
-              {
-                  data: [
-                      data[0].total_sexo_hombre,
-                      data[0].total_sexo_mujeres,
-                  ],
-                  backgroundColor: [
-                      "rgba(75, 252, 13, 1.0)",
-                      "rgba(252, 35, 13, 1.0)",
-                  ],
-                  borderColor: [
-                      "rgba(163, 221, 203, 1)",
-                      "rgba(232, 233, 161, 1)",
-                  ],
-                  borderWidth: 0.5,
-              },
+    type: "pie",
+    data: {
+      labels: ["Hombres", "Mujeres"],
+      datasets: [
+        {
+          data: [
+            data[0].total_sexo_hombre,
+            data[0].total_sexo_mujeres,
           ],
-      },
+          backgroundColor: [
+            "rgba(75, 252, 13, 1.0)",
+            "rgba(252, 35, 13, 1.0)",
+          ],
+          borderColor: [
+            "rgba(163, 221, 203, 1)",
+            "rgba(232, 233, 161, 1)",
+          ],
+          borderWidth: 0.5,
+        },
+      ],
+    },
   });
 
   // Actualizar los datos y estilos de la gráfica de Hombres y Mujeres
-graficaHombresMujeres.data.datasets[0].data = [
-      data[0].total_sexo_hombre,
-      data[0].total_sexo_mujeres,
+  graficaHombresMujeres.data.datasets[0].data = [
+    data[0].total_sexo_hombre,
+    data[0].total_sexo_mujeres,
   ];
   graficaHombresMujeres.update();
 }
@@ -398,38 +399,38 @@ graficaHombresMujeres.data.datasets[0].data = [
 
 function actualizarGraficaEdades(data) {
   const graficaEdades = new Chart(document.getElementById("graficaEdades"), {
-      type: "pie",
-      data: {
-          labels: ["Edad 0-14", "Edad 15-64", "Edad 65 o Mayor"],
-          datasets: [
-              {
-                  data: [
-                      data[0].pob_edad_014,
-                      data[0].pob_edad_1564,
-                      data[0].pob_edad_65,
-                  ],
-                  backgroundColor: [
-                      "rgba(13, 115, 252, 1.0)",
-                      "rgba(251, 255, 1, 1.0)",
-                      "rgba(0, 255, 255, 1.0)",
-                  ],
-                  borderColor: [
-                      "rgba(13, 115, 252, 1)",
-                      "rgba(229, 112, 126, 1)",
-                      "rgba(231, 160, 115, 1)",
-,
-                  ],
-                  borderWidth: 0.5,
-              },
+    type: "pie",
+    data: {
+      labels: ["Edad 0-14", "Edad 15-64", "Edad 65 o Mayor"],
+      datasets: [
+        {
+          data: [
+            data[0].pob_edad_014,
+            data[0].pob_edad_1564,
+            data[0].pob_edad_65,
           ],
-      },
+          backgroundColor: [
+            "rgba(13, 115, 252, 1.0)",
+            "rgba(251, 255, 1, 1.0)",
+            "rgba(0, 255, 255, 1.0)",
+          ],
+          borderColor: [
+            "rgba(13, 115, 252, 1)",
+            "rgba(229, 112, 126, 1)",
+            "rgba(231, 160, 115, 1)",
+            ,
+          ],
+          borderWidth: 0.5,
+        },
+      ],
+    },
   });
 
   // Actualizar los datos y estilos de la gráfica de Edades
   graficaEdades.data.datasets[0].data = [
-      data[0].pob_edad_014,
-      data[0].pob_edad_1564,
-      data[0].pob_edad_65,
+    data[0].pob_edad_014,
+    data[0].pob_edad_1564,
+    data[0].pob_edad_65,
   ];
   graficaEdades.update();
 }
