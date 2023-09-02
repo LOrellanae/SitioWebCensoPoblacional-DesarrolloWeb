@@ -1,0 +1,21 @@
+.grafZone {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+}
+
+.grafica {
+    width: 20%; 
+    margin-bottom: 5px;
+}
+
+@media (max-width: 400px) {
+    .grafZone {
+        flex-direction: column; 
+    }
+
+    .grafica {
+        width: 50%; 
+        margin-bottom: 10px; 
+    }
+}

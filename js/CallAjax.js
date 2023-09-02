@@ -218,6 +218,12 @@ function GetCenso(url, ID) {
         div.appendChild(div2);
         divCenso.appendChild(div);
 
+        var divMuni = document.getElementById('divMuni');
+      divMuni.innerHTML = '';
+
+        actualizarGraficaHombresMujeres(data);
+        actualizarGraficaEdades(data);
+
         const solicitudesMuni = [];
 
         if (ID <= 22 && ID >= 1) {
@@ -352,4 +358,78 @@ function GetCenso(url, ID) {
         });
       }
     });
+}
+
+
+
+function actualizarGraficaHombresMujeres(data) {
+  const graficaHombresMujeres = new Chart(document.getElementById("graficaHombresMujeres"), {
+      type: "pie",
+     data: {
+          labels: ["Hombres", "Mujeres"],
+          datasets: [
+              {
+                  data: [
+                      data[0].total_sexo_hombre,
+                      data[0].total_sexo_mujeres,
+                  ],
+                  backgroundColor: [
+                      "rgba(163, 221, 203, 1.0)",
+                      "rgba(232, 233, 161, 1.0)",
+                  ],
+                  borderColor: [
+                      "rgba(163, 221, 203, 1)",
+                      "rgba(232, 233, 161, 1)",
+                  ],
+                  borderWidth: 0.5,
+              },
+          ],
+      },
+  });
+
+  // Actualizar los datos y estilos de la gráfica de Hombres y Mujeres
+graficaHombresMujeres.data.datasets[0].data = [
+      data[0].total_sexo_hombre,
+      data[0].total_sexo_mujeres,
+  ];
+  graficaHombresMujeres.update();
+}
+
+
+function actualizarGraficaEdades(data) {
+  const graficaEdades = new Chart(document.getElementById("graficaEdades"), {
+      type: "pie",
+      data: {
+          labels: ["Edad 0-14", "Edad 15-64", "Edad 65 o Mayor"],
+          datasets: [
+              {
+                  data: [
+                      data[0].pob_edad_014,
+                      data[0].pob_edad_1564,
+                      data[0].pob_edad_65,
+                  ],
+                  backgroundColor: [
+                      "rgba(230, 181, 102, 0.2)",
+                      "rgba(229, 112, 126, 0.2)",
+                      "rgba(231, 160, 115, 0.2)",
+                  ],
+                  borderColor: [
+                      "rgba(230, 181, 102, 1)",
+                      "rgba(229, 112, 126, 1)",
+                      "rgba(231, 160, 115, 1)",
+,
+                  ],
+                  borderWidth: 0.5,
+              },
+          ],
+      },
+  });
+
+  // Actualizar los datos y estilos de la gráfica de Edades
+  graficaEdades.data.datasets[0].data = [
+      data[0].pob_edad_014,
+      data[0].pob_edad_1564,
+      data[0].pob_edad_65,
+  ];
+  graficaEdades.update();
 }
